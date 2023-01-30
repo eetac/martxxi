@@ -13,8 +13,6 @@ void setup()
   size(800,800);
   background(0);
   
-  
-  
   theNumber = (int)random(50);
   println("theNumber: "+theNumber);
 
@@ -49,8 +47,6 @@ void setup()
                     .setFont(createFont("Georgia",20))
                     .setVisible(false);
 
-                    
-
 
   int posX = 100;
   int posY = 50;
@@ -71,7 +67,15 @@ void setup()
      
      posX = posX + 50;
   }
+
   
+      cp5.addButton("start")
+     .setCaptionLabel("start") 
+     .setValue(500)
+     .setPosition(700, 77)
+     .setOff()
+     .updateSize();
+
   //noLoop();
 
 }
@@ -87,7 +91,12 @@ public void controlEvent(ControlEvent theEvent) {
   int v = int(theButton.getValue());
   
   if (theButton.isOn()) {
-      if (theNumber == v  ) {
+      
+      if (v == 500) {
+        theNumber = (int)random(50);
+        println("***********START, nou VALOR: "+theNumber); 
+      }
+      else if (theNumber == v  ) {
          println("HAS ENCERTAT!!!");
          myTextLabelGreaterThan.setColorValue(0);
          myTextLabelLessThan.setColorValue(0);
