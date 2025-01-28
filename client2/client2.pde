@@ -3,6 +3,7 @@ import processing.net.*;
 
 Client myClient; 
 int dataIn; 
+int theSize=20;
 
 int offset=200;
 
@@ -13,7 +14,8 @@ int[] theColor={255, 255, 0};
 final int WHITE = 0;
 final int RED = 1;
 final int YELLOW = 2;
-
+final int SIZE_INC = 3;
+final int SIZE_DEC = 4;
  
 void setup() { 
   size(800, 600); 
@@ -50,6 +52,9 @@ void draw() {
       
       //theColor =  int(message.substring(2));
     }
+    else if (message.indexOf("s:")==0) {
+        theSize=Integer.parseInt(message.substring(2));
+    }
     else {
     int posicionEspacio = message.indexOf(" ");
     float miX = float(message.substring(1,posicionEspacio));
@@ -59,7 +64,7 @@ void draw() {
     println("y"+miY);
     
     
-    strokeWeight(20);
+    strokeWeight(theSize);
     stroke(theColor[0], theColor[1], theColor[2]);
     point(miX+offset, miY-offset);
     }    
@@ -70,7 +75,7 @@ void draw() {
       message  = "x"+mouseX+" "+mouseY;
 
       myClient.write(message);
-      strokeWeight(20);
+      strokeWeight(theSize);
       stroke(255, 255, 255); 
       point(mouseX+200, mouseY);
 

@@ -7,9 +7,13 @@ ControlP5 cp5;
 Server myServer;
 int val = 0;
 int[] theColor={255, 255, 0};
+int theSize = 20;
 final int WHITE = 0;
 final int RED = 1;
 final int YELLOW = 2;
+final int SIZE_INC = 3;
+final int SIZE_DEC = 4;
+
 
 void setup() {
   size(600, 800);
@@ -36,6 +40,17 @@ void setup() {
     .setColorLabel(color(220,20,60))
     .updateSize();
 
+  cp5.addButton("SIZE +")
+    .setValue(SIZE_INC)
+    .setPosition(500, 75)
+    .setColorLabel(color(255,255,255))
+    .updateSize();
+
+  cp5.addButton("SIZE -")
+    .setValue(SIZE_DEC)
+    .setPosition(500, 95)
+    .setColorLabel(color(255,255,255))
+    .updateSize();
 
   // Starts a myServer on port 5204
   myServer = new Server(this, 5204); 
@@ -71,6 +86,17 @@ public void controlEvent(ControlEvent theEvent) {
           theColor[2]=73;
          myServer.write("c:242,186,73");
       }
+      else if (v == SIZE_INC) {
+        theSize = theSize + 10;
+        myServer.write("s:"+theSize); 
+      }
+      else if (v == SIZE_DEC) {
+        theSize = theSize - 10;  
+        if (theSize<=10) {
+           theSize = 10;
+        }
+        myServer.write("s:"+theSize); 
+      }
       else {
           theColor[0]=255;
           theColor[1]=255;
@@ -95,7 +121,7 @@ void draw() {
           //Comen�a amb el caracter X
           message  = "x"+mouseX+" "+mouseY;
       if (mouseY>200 && mouseX>0) {
-        strokeWeight(20);
+        strokeWeight(theSize);
         stroke(theColor[0], theColor[1], theColor[2]); 
         point(mouseX, mouseY);
        
@@ -117,7 +143,7 @@ void draw() {
       println("miy "+miY);
       
     
-      strokeWeight(20);
+      strokeWeight(theSize);
       stroke(0, 0, 0); 
       point(miX, miY+200);
     
